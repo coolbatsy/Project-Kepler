@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEPLER | SDG Framework</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JetBrains Mono Font -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <!-- Hover detection zone for sidebar autohide -->
+    <div class="hover-trigger-zone"></div>
+
+    <div class="app-container">
+        <!-- Frosted Glass Apple-Style Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="brand">
+                    <i class="fa-solid fa-satellite"></i>
+                    <span>KEPLER</span>
+                </div>
+                <button id="settings-btn" class="icon-btn" title="Navigation Settings">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+
+            <!-- Settings Popup Dropdown -->
+            <div id="settings-menu" class="settings-menu hidden">
+                <div class="setting-item">
+                    <span>Auto-Hide Sidebar</span>
+                    <label class="switch">
+                        <input type="checkbox" id="autohide-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" data-tab="home">
+                    <i class="fa-solid fa-house"></i> Home
+                </li>
+                <li data-tab="skills">
+                    <i class="fa-solid fa-compass"></i> Explore Skills
+                </li>
+                <li data-tab="mapper">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Skill Mapper
+                </li>
+                <li data-tab="methodology">
+                    <i class="fa-solid fa-microscope"></i> Methodology
+                </li>
+                <li data-tab="metrics">
+                    <i class="fa-solid fa-chart-simple"></i> Impact Metrics
+                </li>
+                <li data-tab="philosophy">
+                    <i class="fa-solid fa-seedling"></i> Philosophy
+                </li>
+                <li data-tab="why">
+                    <i class="fa-solid fa-lightbulb"></i> The "Why"
+                </li>
+                <li data-tab="inspirations">
+                    <i class="fa-brands fa-apple"></i> Inspirations
+                </li>
+            </ul>
+
+            <div class="sidebar-bottom">
+                <button id="theme-toggle" class="subtle-btn">
+                    <i class="fa-solid fa-moon"></i> <span>Dark Mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- Tab 1: Home -->
+            <section id="home" class="tab-content active">
+                <header class="section-header">
+                    <h1>Knowledge Ecosystem Promoting Literacy and Economic Resurgence</h1>
+                    <p class="subtitle">An AI-driven pipeline for inclusive <span id="home-typewriter" class="typewriter-text"></span><span class="blinking-cursor">|</span></p>
+                </header>
+                
+                <div class="card">
+                    <h2>About the Platform</h2>
+                    <p>KEPLER is not just a learning management system. It is a dynamic engine designed to map education directly to local gig opportunities, bridging the gap between learning a skill and monetizing it.</p>
+                    
+                    <div class="fun-fact-container">
+                        <i class="fa-solid fa-rocket"></i>
+                        <span id="kepler-fact">Loading mission data...</span>
+                    </div>
+
+                    <a href="https://sdgs.un.org/goals" target="_blank" class="un-button">
+                        <i class="fa-solid fa-globe"></i> UN SDG Framework Reference
+                    </a>
+                </div>
+
+                <!-- Moon Image Banner (Replaced ASCII Art) -->
+                <div class="moon-banner">
+                    <img src="moon.jpg" alt="Surface of the Moon" class="moon-image">
+                    <div class="moon-overlay">
+                        <span>// AIM FOR THE STARS. LAND ON THE MOON. //</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Explore Skills -->
+            <section id="skills" class="tab-content">
+                <header class="section-header">
+                    <h1>Explore Skills Feed</h1>
+                    <!-- Added cursor animation here as requested -->
+                    <p class="subtitle">Curated micro-capabilities for <span id="skills-typewriter" class="typewriter-text"></span><span class="blinking-cursor">|</span></p>
+                </header>
+                
+                <div class="skills-grid">
+                    <!-- Technical Skills -->
+                    <div class="card skill-card">
+                        <div class="card-tag">SDG 4 & 8</div>
+                        <h2>Version Control & Git</h2>
+                        <p>Learn to track changes in code and collaborate globally. Mastering Git builds logical tracking and opens remote collaboration doors.</p>
+                        <a href="https://git-scm.com/doc" target="_blank" class="un-button"><i class="fa-solid fa-book"></i> Official Docs</a>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="card-tag">SDG 8 & 9</div>
+                        <h2>Data Structuring & Spreadsheets</h2>
+                        <p>Transform raw figures into organized ledgers. Helps local businesses digitize cashbooks into clean analytical sheets.</p>
+                        <a href="https://support.microsoft.com/en-us/excel" target="_blank" class="un-button"><i class="fa-solid fa-book"></i> Official Docs</a>
+                    </div>
+                    
+                    <!-- New Creative & Humanitarian Skills -->
+                    <div class="card skill-card">
+                        <div class="card-tag">SDG 3 & 4</div>
+                        <h2>Digital Storytelling</h2>
+                        <p>Combine writing and digital media to spread awareness about local issues, health, and education, driving community engagement.</p>
+                        <a href="#" class="un-button"><i class="fa-solid fa-pen-nib"></i> Explore Guides</a>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="card-tag">SDG 10 & 16</div>
+                        <h2>Community Organizing OSINT</h2>
+                        <p>Use Open Source Intelligence (OSINT) to gather public data for social justice, helping NGOs build transparent reports.</p>
+                        <a href="#" class="un-button"><i class="fa-solid fa-magnifying-glass"></i> Explore Guides</a>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="card-tag">SDG 9 & 11</div>
+                        <h2>UI/UX for Accessibility</h2>
+                        <p>Design digital interfaces that are usable by people with disabilities, ensuring the digital infrastructure of tomorrow leaves no one behind.</p>
+                        <a href="https://www.w3.org/WAI/fundamentals/" target="_blank" class="un-button"><i class="fa-solid fa-universal-access"></i> W3C Docs</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Skill Mapper -->
+            <section id="mapper" class="tab-content">
+                <header class="section-header">
+                    <h1>AI Skill-to-Gig Mapper</h1>
+                    <p class="subtitle">Directly mapping human potential to economic self-sufficiency.</p>
+                </header>
+                <div class="card">
+                    <h2>Opportunity Generator Sandbox</h2>
+                    <p>Enter a capability or interest below to watch KEPLER construct your 3-step localized pathway.</p>
+                    <div class="sandbox-input-group">
+                        <input type="text" placeholder="e.g. Basic Data Entry, Python Scripts..." class="dark-input">
+                        <button class="un-button action-btn">Generate Pathway</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Methodology (Replaced Architecture) -->
+            <section id="methodology" class="tab-content">
+                <header class="section-header">
+                    <h1>Methodology & Market Gap</h1>
+                    <p class="subtitle">How KEPLER solves the shortcomings of traditional e-learning.</p>
+                </header>
+                
+                <div class="methodology-grid">
+                    <div class="card issue-card">
+                        <div class="issue-header">
+                            <i class="fa-solid fa-xmark" style="color: #ff453a;"></i>
+                            <h3>Traditional Platforms (Coursera, Udemy)</h3>
+                        </div>
+                        <p><strong>The Shortcoming:</strong> They are passive and theoretical. A user watches 50 hours of video but has no idea how to apply that knowledge to their local economy. Furthermore, certification often sits behind a paywall, gatekeeping lower-income youth.</p>
+                    </div>
+                    
+                    <div class="card solution-card">
+                        <div class="issue-header">
+                            <i class="fa-solid fa-check" style="color: #32d74b;"></i>
+                            <h3>The KEPLER Solution</h3>
+                        </div>
+                        <p><strong>The Methodology:</strong> We do not host courses; we build pipelines. By utilizing a "Micro-bite -> Project -> Local Gig" framework, KEPLER uses AI to connect open-source documentation directly to immediate, monetizable local needs. We remove the paywall and focus strictly on active execution.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: Impact Metrics -->
+            <section id="metrics" class="tab-content">
+                <!-- Keep existing metrics code -->
+                <header class="section-header">
+                    <h1>Impact Metrics</h1>
+                    <p class="subtitle">Grounding UN Sustainable Development Goals in regional data.</p>
+                </header>
+                <div class="metrics-grid">
+                    <div class="card metric-card">
+                        <h3>83%</h3>
+                        <p>Youth proportion in India's unemployed workforce, highlighting the urgency of targeted skill mapping.</p>
+                    </div>
+                    <div class="card metric-card">
+                        <h3>SDG 4 -> 8</h3>
+                        <p>Education acts as the direct catalyst for economic productivity and fair pay ecosystems.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 6: Philosophy -->
+            <section id="philosophy" class="tab-content">
+                <header class="section-header">
+                    <h1>The Core Philosophy</h1>
+                </header>
+                <div class="card">
+                    <h2>Education as the Catalyst</h2>
+                    <p>Sustainable development must integrate economic growth, social well-being, and environmental protection. Our framework places Quality Education (SDG 4) at the absolute center.</p>
+                    <p>By using localized, AI-generated "micro-bites," we bypass heavy infrastructural barriers, enabling Decent Work (SDG 8) and Innovation (SDG 9). This directly reduces societal inequalities (SDG 10) and leads to stronger, peaceful institutions (SDG 16).</p>
+                </div>
+
+                <!-- New SDG Visual Grid -->
+                <h3 class="sdg-grid-title">Our Target Goals</h3>
+                <div class="sdg-visual-grid">
+                    <a href="https://sdgs.un.org/goals/goal4" target="_blank" class="sdg-item card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-04.jpg" alt="SDG 4 Quality Education">
+                        <p>Ensuring inclusive and equitable quality education.</p>
+                    </a>
+                    <a href="https://sdgs.un.org/goals/goal8" target="_blank" class="sdg-item card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-08.jpg" alt="SDG 8 Decent Work">
+                        <p>Promoting sustained, inclusive economic growth.</p>
+                    </a>
+                    <a href="https://sdgs.un.org/goals/goal9" target="_blank" class="sdg-item card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-09.jpg" alt="SDG 9 Industry and Innovation">
+                        <p>Building resilient infrastructure and fostering innovation.</p>
+                    </a>
+                    <a href="https://sdgs.un.org/goals/goal10" target="_blank" class="sdg-item card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-10.jpg" alt="SDG 10 Reduced Inequalities">
+                        <p>Reducing inequality within and among countries.</p>
+                    </a>
+                    <a href="https://sdgs.un.org/goals/goal16" target="_blank" class="sdg-item card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-16.jpg" alt="SDG 16 Peace and Justice">
+                        <p>Promoting peaceful and inclusive societies.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tab 7: The Strong Why -->
+            <section id="why" class="tab-content">
+                <!-- Keep existing Why code -->
+                <header class="section-header">
+                    <h1>The Strong "Why"</h1>
+                </header>
+                <div class="card">
+                    <h2>The Demographic Reality</h2>
+                    <p>India is currently the fastest-growing large economy and possesses a distinct demographic advantage with its young workforce. However, this growth means nothing if it is not inclusive.</p>
+                    <p>We built KEPLER because the digital divide is actively worsening educational inequality. While mobile internet is widespread, actual digital literacy remains critically low. Many users lack the critical thinking skills required to safely navigate the digital economy.</p>
+                    <p>You cannot have resilient industries or infrastructure without an upskilled workforce. KEPLER is designed to be the pipeline that turns raw human potential into localized economic stability.</p>
+                </div>
+            </section>
+
+            <!-- Tab 8: Inspirations (New Tab) -->
+            <section id="inspirations" class="tab-content">
+                <header class="section-header">
+                    <h1>Inspirations & Foundations</h1>
+                    <p class="subtitle">The giants whose shoulders we stand on.</p>
+                </header>
+                
+                <div class="inspirations-grid">
+                    <a href="https://developer.apple.com/design/" target="_blank" class="card inspo-card">
+                        <i class="fa-brands fa-apple inspo-icon"></i>
+                        <h3>Apple Design</h3>
+                        <p>The philosophy that technology should exist at the intersection of liberal arts and engineering. Inspiring our minimalist, human-first UI.</p>
+                    </a>
+                    <a href="https://engineering.atspotify.com/" target="_blank" class="card inspo-card">
+                        <i class="fa-brands fa-spotify inspo-icon"></i>
+                        <h3>Spotify Engineering</h3>
+                        <p>Their approach to decentralized, scalable architecture and dark-mode aesthetic highly influenced KEPLER's layout.</p>
+                    </a>
+                    <a href="https://www.un.org/en/academic-impact" target="_blank" class="card inspo-card">
+                        <i class="fa-solid fa-earth-americas inspo-icon"></i>
+                        <h3>UN Academic Impact</h3>
+                        <p>The foundational framework that ensures our code isn't just functional, but serves a quantifiable humanitarian purpose.</p>
+                    </a>
+                </div>
+
+                <!-- Steve Jobs Quote Section -->
+                <div class="jobs-section">
+                    <div class="jobs-quote-box card">
+                        <i class="fa-solid fa-quote-left quote-icon"></i>
+                        <p class="quote-text">"The people who are crazy enough to think they can change the world are the ones who do."</p>
+                        <div class="quote-animation-area">
+                            <p>His vision reminds us that to achieve these SDGs, we must be <span id="jobs-typewriter" class="typewriter-text"></span><span class="blinking-cursor">|</span></p>
+                        </div>
+                    </div>
+                    <img src="jobs.jpg" alt="Steve Jobs" class="jobs-image">
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
