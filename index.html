@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>KEPLER | SDG Framework</title>
     <link rel="stylesheet" href="css/style.css">
     <!-- JetBrains Mono Font -->
@@ -15,6 +15,11 @@
     <!-- Hover detection zone for sidebar autohide -->
     <div class="hover-trigger-zone"></div>
 
+    <!-- Mobile hamburger button -->
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
     <div class="app-container">
         <!-- Frosted Glass Apple-Style Sidebar -->
         <nav class="sidebar" id="sidebar">
@@ -22,20 +27,6 @@
                 <div class="brand">
                     <i class="fa-solid fa-satellite"></i>
                     <span>KEPLER</span>
-                </div>
-                <button id="settings-btn" class="icon-btn" title="Navigation Settings">
-                    <i class="fa-solid fa-gear"></i>
-                </button>
-            </div>
-
-            <!-- Settings Popup Dropdown -->
-            <div id="settings-menu" class="settings-menu hidden">
-                <div class="setting-item">
-                    <span>Auto-Hide Sidebar</span>
-                    <label class="switch">
-                        <input type="checkbox" id="autohide-toggle">
-                        <span class="slider round"></span>
-                    </label>
                 </div>
             </div>
             
@@ -50,16 +41,10 @@
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Skill Mapper
                 </li>
                 <li data-tab="methodology">
-                    <i class="fa-solid fa-microscope"></i> Methodology
+                    <i class="fa-solid fa-microscope"></i> Methodology & Philosophy
                 </li>
                 <li data-tab="metrics">
-                    <i class="fa-solid fa-chart-simple"></i> Impact Metrics
-                </li>
-                <li data-tab="philosophy">
-                    <i class="fa-solid fa-seedling"></i> Philosophy
-                </li>
-                <li data-tab="why">
-                    <i class="fa-solid fa-lightbulb"></i> The "Why"
+                    <i class="fa-solid fa-chart-simple"></i> Impact & The "Why"
                 </li>
                 <li data-tab="inspirations">
                     <i class="fa-brands fa-apple"></i> Inspirations
@@ -67,11 +52,21 @@
             </ul>
 
             <div class="sidebar-bottom">
+                <div class="setting-item sidebar-setting">
+                    <span>Auto-Hide Sidebar</span>
+                    <label class="switch">
+                        <input type="checkbox" id="autohide-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <button id="theme-toggle" class="subtle-btn">
                     <i class="fa-solid fa-moon"></i> <span>Dark Mode</span>
                 </button>
             </div>
         </nav>
+
+        <!-- Mobile overlay -->
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
         <!-- Main Content Area -->
         <main class="content-area">
@@ -97,7 +92,7 @@
                     </a>
                 </div>
 
-                <!-- Moon Image Banner (Replaced ASCII Art) -->
+                <!-- Moon Image Banner -->
                 <div class="moon-banner">
                     <img src="moon.jpg" alt="Surface of the Moon" class="moon-image">
                     <div class="moon-overlay">
@@ -110,7 +105,6 @@
             <section id="skills" class="tab-content">
                 <header class="section-header">
                     <h1>Explore Skills Feed</h1>
-                    <!-- Added cursor animation here as requested -->
                     <p class="subtitle">Curated micro-capabilities for <span id="skills-typewriter" class="typewriter-text"></span><span class="blinking-cursor">|</span></p>
                 </header>
                 
@@ -129,18 +123,18 @@
                         <a href="https://support.microsoft.com/en-us/excel" target="_blank" class="un-button"><i class="fa-solid fa-book"></i> Official Docs</a>
                     </div>
                     
-                    <!-- New Creative & Humanitarian Skills -->
+                    <!-- Creative & Humanitarian Skills -->
                     <div class="card skill-card">
                         <div class="card-tag">SDG 3 & 4</div>
                         <h2>Digital Storytelling</h2>
                         <p>Combine writing and digital media to spread awareness about local issues, health, and education, driving community engagement.</p>
-                        <a href="#" class="un-button"><i class="fa-solid fa-pen-nib"></i> Explore Guides</a>
+                        <a href="https://digitalstorytelling.coe.uh.edu/" target="_blank" class="un-button"><i class="fa-solid fa-pen-nib"></i> Explore Guides</a>
                     </div>
                     <div class="card skill-card">
                         <div class="card-tag">SDG 10 & 16</div>
                         <h2>Community Organizing OSINT</h2>
                         <p>Use Open Source Intelligence (OSINT) to gather public data for social justice, helping NGOs build transparent reports.</p>
-                        <a href="#" class="un-button"><i class="fa-solid fa-magnifying-glass"></i> Explore Guides</a>
+                        <a href="https://www.bellingcat.com/resources/2024/01/09/the-bellingcat-online-investigation-toolkit/" target="_blank" class="un-button"><i class="fa-solid fa-magnifying-glass"></i> Explore Guides</a>
                     </div>
                     <div class="card skill-card">
                         <div class="card-tag">SDG 9 & 11</div>
@@ -167,13 +161,15 @@
                 </div>
             </section>
 
-            <!-- Tab 4: Methodology (Replaced Architecture) -->
+            <!-- Tab 4: Methodology & Philosophy (Combined) -->
             <section id="methodology" class="tab-content">
                 <header class="section-header">
-                    <h1>Methodology & Market Gap</h1>
-                    <p class="subtitle">How KEPLER solves the shortcomings of traditional e-learning.</p>
+                    <h1>Methodology & Philosophy</h1>
+                    <p class="subtitle">How KEPLER bridges the market gap — grounded in a philosophy of education as the catalyst.</p>
                 </header>
                 
+                <!-- Methodology Section -->
+                <h3 class="combined-section-title"><i class="fa-solid fa-microscope"></i> Methodology & Market Gap</h3>
                 <div class="methodology-grid">
                     <div class="card issue-card">
                         <div class="issue-header">
@@ -191,39 +187,17 @@
                         <p><strong>The Methodology:</strong> We do not host courses; we build pipelines. By utilizing a "Micro-bite -> Project -> Local Gig" framework, KEPLER uses AI to connect open-source documentation directly to immediate, monetizable local needs. We remove the paywall and focus strictly on active execution.</p>
                     </div>
                 </div>
-            </section>
 
-            <!-- Tab 5: Impact Metrics -->
-            <section id="metrics" class="tab-content">
-                <!-- Keep existing metrics code -->
-                <header class="section-header">
-                    <h1>Impact Metrics</h1>
-                    <p class="subtitle">Grounding UN Sustainable Development Goals in regional data.</p>
-                </header>
-                <div class="metrics-grid">
-                    <div class="card metric-card">
-                        <h3>83%</h3>
-                        <p>Youth proportion in India's unemployed workforce, highlighting the urgency of targeted skill mapping.</p>
-                    </div>
-                    <div class="card metric-card">
-                        <h3>SDG 4 -> 8</h3>
-                        <p>Education acts as the direct catalyst for economic productivity and fair pay ecosystems.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tab 6: Philosophy -->
-            <section id="philosophy" class="tab-content">
-                <header class="section-header">
-                    <h1>The Core Philosophy</h1>
-                </header>
+                <!-- Philosophy Section -->
+                <div class="section-divider"></div>
+                <h3 class="combined-section-title"><i class="fa-solid fa-seedling"></i> The Core Philosophy</h3>
                 <div class="card">
                     <h2>Education as the Catalyst</h2>
                     <p>Sustainable development must integrate economic growth, social well-being, and environmental protection. Our framework places Quality Education (SDG 4) at the absolute center.</p>
                     <p>By using localized, AI-generated "micro-bites," we bypass heavy infrastructural barriers, enabling Decent Work (SDG 8) and Innovation (SDG 9). This directly reduces societal inequalities (SDG 10) and leads to stronger, peaceful institutions (SDG 16).</p>
                 </div>
 
-                <!-- New SDG Visual Grid -->
+                <!-- SDG Visual Grid -->
                 <h3 class="sdg-grid-title">Our Target Goals</h3>
                 <div class="sdg-visual-grid">
                     <a href="https://sdgs.un.org/goals/goal4" target="_blank" class="sdg-item card">
@@ -249,21 +223,38 @@
                 </div>
             </section>
 
-            <!-- Tab 7: The Strong Why -->
-            <section id="why" class="tab-content">
-                <!-- Keep existing Why code -->
+            <!-- Tab 5: Impact Metrics & The "Why" (Combined) -->
+            <section id="metrics" class="tab-content">
                 <header class="section-header">
-                    <h1>The Strong "Why"</h1>
+                    <h1>Impact Metrics & The Strong "Why"</h1>
+                    <p class="subtitle">Grounding UN Sustainable Development Goals in regional data — and why it matters.</p>
                 </header>
+
+                <!-- Impact Metrics Section -->
+                <h3 class="combined-section-title"><i class="fa-solid fa-chart-simple"></i> Impact Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="card metric-card">
+                        <h3>83%</h3>
+                        <p>Youth proportion in India's unemployed workforce, highlighting the urgency of targeted skill mapping.</p>
+                    </div>
+                    <div class="card metric-card">
+                        <h3>SDG 4 -> 8</h3>
+                        <p>Education acts as the direct catalyst for economic productivity and fair pay ecosystems.</p>
+                    </div>
+                </div>
+
+                <!-- The "Why" Section -->
+                <div class="section-divider"></div>
+                <h3 class="combined-section-title"><i class="fa-solid fa-lightbulb"></i> The Demographic Reality</h3>
                 <div class="card">
-                    <h2>The Demographic Reality</h2>
+                    <h2>Why KEPLER Exists</h2>
                     <p>India is currently the fastest-growing large economy and possesses a distinct demographic advantage with its young workforce. However, this growth means nothing if it is not inclusive.</p>
                     <p>We built KEPLER because the digital divide is actively worsening educational inequality. While mobile internet is widespread, actual digital literacy remains critically low. Many users lack the critical thinking skills required to safely navigate the digital economy.</p>
                     <p>You cannot have resilient industries or infrastructure without an upskilled workforce. KEPLER is designed to be the pipeline that turns raw human potential into localized economic stability.</p>
                 </div>
             </section>
 
-            <!-- Tab 8: Inspirations (New Tab) -->
+            <!-- Tab 6: Inspirations -->
             <section id="inspirations" class="tab-content">
                 <header class="section-header">
                     <h1>Inspirations & Foundations</h1>
@@ -281,7 +272,7 @@
                         <h3>Spotify Engineering</h3>
                         <p>Their approach to decentralized, scalable architecture and dark-mode aesthetic highly influenced KEPLER's layout.</p>
                     </a>
-                    <a href="https://www.un.org/en/academic-impact" target="_blank" class="card inspo-card">
+                    <a href="https://academicimpact.un.org/" target="_blank" class="card inspo-card">
                         <i class="fa-solid fa-earth-americas inspo-icon"></i>
                         <h3>UN Academic Impact</h3>
                         <p>The foundational framework that ensures our code isn't just functional, but serves a quantifiable humanitarian purpose.</p>

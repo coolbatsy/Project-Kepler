@@ -42,6 +42,7 @@ body {
 .app-container {
     display: flex;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
     width: 100vw;
     overflow: hidden;
     position: relative;
@@ -60,6 +61,7 @@ body {
 /* Apple Glassmorphism Sidebar */
 .sidebar {
     width: 280px;
+    min-width: 280px;
     background: var(--bg-sidebar);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -115,28 +117,71 @@ body {
     background-color: rgba(113, 113, 122, 0.15);
 }
 
-/* Settings Menu Popup */
-.settings-menu {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 12px 16px;
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    z-index: 101;
-    font-size: 0.8rem;
+/* Nav Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.settings-menu.hidden {
-    display: none;
-}
-
-.setting-item {
+.nav-links li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-links li:hover, .nav-links li.active {
+    color: var(--text-primary);
+    background-color: rgba(113, 113, 122, 0.12);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Auto-hide toggle in sidebar bottom */
+.sidebar-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.subtle-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.subtle-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(113, 113, 122, 0.12);
 }
 
 /* Switch styling */
@@ -145,6 +190,7 @@ body {
     display: inline-block;
     width: 34px;
     height: 20px;
+    flex-shrink: 0;
 }
 
 .switch input {
@@ -180,58 +226,6 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(14px);
-}
-
-/* Nav Links */
-.nav-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.nav-links li {
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-.nav-links li:hover, .nav-links li.active {
-    color: var(--text-primary);
-    background-color: rgba(113, 113, 122, 0.12);
-}
-
-.sidebar-bottom {
-    margin-top: auto;
-    padding-top: 16px;
-}
-
-.subtle-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    width: 100%;
-    transition: all 0.2s ease;
-}
-
-.subtle-btn:hover {
-    color: var(--text-primary);
-    background-color: rgba(113, 113, 122, 0.12);
 }
 
 /* Content Area */
@@ -301,34 +295,6 @@ input:checked + .slider:before {
     font-size: 0.9rem;
 }
 
-/* ASCII Spacecraft Area */
-.spacecraft-container {
-    margin-top: 40px;
-    padding: 24px;
-    border: 1px dashed var(--border-color);
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.15);
-}
-
-.ascii-art {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.2;
-    color: var(--text-secondary);
-    white-space: pre;
-    text-align: center;
-}
-
-.art-caption {
-    margin-top: 14px;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
-}
-
 /* Grids & Buttons */
 .skills-grid, .metrics-grid {
     display: grid;
@@ -380,10 +346,12 @@ input:checked + .slider:before {
     display: flex;
     gap: 12px;
     margin-top: 16px;
+    flex-wrap: wrap;
 }
 
 .dark-input {
     flex-grow: 1;
+    min-width: 0;
     background: var(--bg-main);
     border: 1px solid var(--border-color);
     padding: 10px 14px;
@@ -397,7 +365,21 @@ input:checked + .slider:before {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- NEW ADDITIONS FOR V3 --- */
+/* --- Combined Section Styles --- */
+.combined-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.section-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 40px 0 32px;
+}
 
 /* Moon Banner */
 .moon-banner {
@@ -467,7 +449,7 @@ input:checked + .slider:before {
 
 .sdg-visual-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
 }
 
@@ -565,17 +547,333 @@ input:checked + .slider:before {
     border-radius: 12px;
     filter: grayscale(100%) contrast(1.1);
     box-shadow: -10px 10px 30px rgba(0,0,0,0.5);
+    flex-shrink: 0;
 }
 
-/* Responsive adjustments */
+/* Mobile hamburger button */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+
+/* =============================================
+   RESPONSIVE DESIGN — Multi-Device Optimization
+   ============================================= */
+
+/* Tablets in landscape & smaller desktops */
+@media (max-width: 1024px) {
+    .content-area {
+        padding: 40px 36px;
+    }
+
+    .section-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .methodology-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .jobs-image {
+        width: 200px;
+    }
+}
+
+/* Tablets in portrait */
 @media (max-width: 768px) {
-    .methodology-grid, .jobs-section {
-        flex-direction: column;
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .hover-trigger-zone {
+        display: none;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        transform: translateX(-100%);
+        z-index: 150;
+        width: 280px;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* Disable autohide on mobile — controlled by hamburger */
+    .sidebar.autohide {
+        position: fixed;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.autohide.mobile-open {
+        transform: translateX(0);
+    }
+
+    .content-area {
+        padding: 70px 24px 32px;
+        width: 100%;
+    }
+
+    .section-header h1 {
+        font-size: 1.35rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .methodology-grid {
         grid-template-columns: 1fr;
     }
+
+    .jobs-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .jobs-image {
         width: 100%;
         max-width: 300px;
         margin: 0 auto;
+    }
+
+    .quote-text {
+        font-size: 1.1rem !important;
+    }
+
+    .skills-grid, .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sdg-visual-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .sdg-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .inspirations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .moon-banner {
+        height: 200px;
+    }
+
+    .sandbox-input-group {
+        flex-direction: column;
+    }
+
+    .sandbox-input-group .un-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .content-area {
+        padding: 64px 16px 24px;
+    }
+
+    .section-header h1 {
+        font-size: 1.15rem;
+    }
+
+    .subtitle {
+        font-size: 0.82rem;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .card h2 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 0.82rem;
+    }
+
+    .un-button {
+        font-size: 0.75rem;
+        padding: 7px 12px;
+    }
+
+    .fun-fact-container {
+        font-size: 0.78rem;
+        padding: 10px 14px;
+    }
+
+    .moon-banner {
+        height: 160px;
+        border-radius: 12px;
+    }
+
+    .moon-overlay {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .sdg-visual-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+    }
+
+    .sdg-item {
+        padding: 12px;
+    }
+
+    .sdg-item img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .sdg-item p {
+        font-size: 0.7rem;
+    }
+
+    .inspo-icon {
+        font-size: 1.5rem;
+    }
+
+    .jobs-section {
+        padding: 14px;
+    }
+
+    .quote-icon {
+        font-size: 2rem;
+    }
+
+    .quote-text {
+        font-size: 1rem !important;
+    }
+
+    .brand {
+        font-size: 1.1rem;
+    }
+
+    .nav-links li {
+        font-size: 0.82rem;
+        padding: 9px 10px;
+    }
+}
+
+/* Landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+    .app-container {
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .content-area {
+        padding: 16px 24px;
+    }
+
+    .section-header {
+        margin-bottom: 20px;
+    }
+
+    .section-header h1 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+    }
+
+    .card {
+        padding: 16px;
+        margin-bottom: 14px;
+    }
+
+    .moon-banner {
+        height: 140px;
+    }
+
+    .sidebar {
+        width: 240px;
+        min-width: 240px;
+        padding: 14px;
+    }
+
+    .sidebar-top {
+        margin-bottom: 14px;
+    }
+
+    .nav-links {
+        gap: 4px;
+    }
+
+    .nav-links li {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+    }
+
+    .jobs-section {
+        flex-direction: row;
+    }
+
+    .jobs-image {
+        width: 150px;
+    }
+}
+
+/* Very large screens */
+@media (min-width: 1600px) {
+    .content-area {
+        padding: 60px 100px;
+        max-width: 1400px;
+    }
+
+    .section-header h1 {
+        font-size: 2rem;
     }
 }

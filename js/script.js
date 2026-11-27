@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
             item.classList.add("active");
             const targetId = item.getAttribute("data-tab");
             document.getElementById(targetId).classList.add("active");
+
+            // Close mobile sidebar after navigation
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove("mobile-open");
+                sidebarOverlay.classList.remove("active");
+            }
         });
     });
 
@@ -32,17 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- 3. Sidebar Settings & Auto-Hide ---
-    const settingsBtn = document.getElementById("settings-btn");
-    const settingsMenu = document.getElementById("settings-menu");
+    // --- 3. Sidebar Auto-Hide (now in sidebar bottom, no settings popup) ---
     const autohideToggle = document.getElementById("autohide-toggle");
     const sidebar = document.getElementById("sidebar");
     const hoverZone = document.querySelector(".hover-trigger-zone");
     const appContainer = document.querySelector(".app-container");
-
-    settingsBtn.addEventListener("click", () => {
-        settingsMenu.classList.toggle("hidden");
-    });
 
     autohideToggle.addEventListener("change", (e) => {
         if (e.target.checked) {
@@ -62,7 +62,29 @@ document.addEventListener("DOMContentLoaded", () => {
         appContainer.classList.remove("hovered");
     });
 
-    // --- 4. Advanced Multi-Typewriter Logic ---
+    // --- 4. Mobile Sidebar Toggle ---
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+    mobileMenuBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("mobile-open");
+        sidebarOverlay.classList.toggle("active");
+    });
+
+    sidebarOverlay.addEventListener("click", () => {
+        sidebar.classList.remove("mobile-open");
+        sidebarOverlay.classList.remove("active");
+    });
+
+    // Handle resize: clean up mobile state if resizing to desktop
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove("mobile-open");
+            sidebarOverlay.classList.remove("active");
+        }
+    });
+
+    // --- 5. Advanced Multi-Typewriter Logic ---
     class Typewriter {
         constructor(elementId, phrases) {
             this.element = document.getElementById(elementId);
@@ -124,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "visionary."
     ]);
 
-    // --- 5. NASA Kepler Facts ---
+    // --- 6. NASA Kepler Facts ---
     const facts = [
         "Fun Fact: NASA's Kepler mission proved our sky is filled with more planets than stars.",
         "Fun Fact: Kepler discovered over 2,600 confirmed exoplanets using transit photometry.",
