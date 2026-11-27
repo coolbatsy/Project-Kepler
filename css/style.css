@@ -43,7 +43,8 @@ body {
     display: flex;
     height: 100vh;
     height: 100dvh; /* Dynamic viewport height for mobile browsers */
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -72,18 +73,24 @@ body {
     z-index: 100;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
     position: relative;
+    flex-shrink: 0;
 }
 
 /* Auto-Hide State */
 .sidebar.autohide {
     position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
     height: 100vh;
     transform: translateX(-100%);
+    box-shadow: none;
 }
 
 .sidebar.autohide:hover,
 .app-container.hovered .sidebar.autohide {
     transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar-top {
@@ -99,6 +106,27 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+.sidebar-close-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sidebar-close-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background-color: rgba(113, 113, 122, 0.15);
 }
 
 .icon-btn {
@@ -230,14 +258,18 @@ input:checked + .slider:before {
 
 /* Content Area */
 .content-area {
-    flex-grow: 1;
+    flex: 1 1 0%;
+    width: 100%;
+    min-width: 0;
     padding: 50px 60px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .tab-content {
     display: none;
     animation: fadeIn 0.35s ease-out;
+    width: 100%;
 }
 
 .tab-content.active {
@@ -556,7 +588,7 @@ input:checked + .slider:before {
     position: fixed;
     top: 16px;
     left: 16px;
-    z-index: 200;
+    z-index: 90;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -569,12 +601,20 @@ input:checked + .slider:before {
     justify-content: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .mobile-menu-btn:hover {
     background-color: var(--accent);
     color: white;
+}
+
+.mobile-menu-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: scale(0.8);
 }
 
 /* Sidebar overlay for mobile */
@@ -585,8 +625,11 @@ input:checked + .slider:before {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 90;
+    transition: opacity 0.3s ease;
 }
 
 .sidebar-overlay.active {
@@ -618,9 +661,13 @@ input:checked + .slider:before {
     }
 }
 
-/* Tablets in portrait */
+/* Tablets in portrait & Mobile devices */
 @media (max-width: 768px) {
     .mobile-menu-btn {
+        display: flex;
+    }
+
+    .sidebar-close-btn {
         display: flex;
     }
 
@@ -636,14 +683,16 @@ input:checked + .slider:before {
         height: 100dvh;
         transform: translateX(-100%);
         z-index: 150;
-        width: 280px;
+        width: min(300px, 85vw);
+        min-width: unset;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
     }
 
     .sidebar.mobile-open {
         transform: translateX(0);
     }
 
-    /* Disable autohide on mobile — controlled by hamburger */
+    /* Keep sidebar off-screen on mobile until hamburger is clicked */
     .sidebar.autohide {
         position: fixed;
         transform: translateX(-100%);
@@ -653,8 +702,13 @@ input:checked + .slider:before {
         transform: translateX(0);
     }
 
+    /* Hide autohide toggle on mobile since drawer is already hidden */
+    .sidebar-setting {
+        display: none;
+    }
+
     .content-area {
-        padding: 70px 24px 32px;
+        padding: 76px 20px 32px;
         width: 100%;
     }
 
@@ -719,7 +773,7 @@ input:checked + .slider:before {
 /* Small phones */
 @media (max-width: 480px) {
     .content-area {
-        padding: 64px 16px 24px;
+        padding: 70px 16px 24px;
     }
 
     .section-header h1 {
@@ -869,8 +923,12 @@ input:checked + .slider:before {
 /* Very large screens */
 @media (min-width: 1600px) {
     .content-area {
-        padding: 60px 100px;
-        max-width: 1400px;
+        padding: 60px 80px;
+        width: 100%;
+    }
+
+    .tab-content {
+        max-width: 1500px;
     }
 
     .section-header h1 {

@@ -1,9 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. Tab Switching Logic ---
+    // --- 1. DOM Elements ---
     const navItems = document.querySelectorAll(".nav-links li");
     const tabContents = document.querySelectorAll(".tab-content");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
+    const autohideToggle = document.getElementById("autohide-toggle");
+    const hoverZone = document.querySelector(".hover-trigger-zone");
+    const appContainer = document.querySelector(".app-container");
+    const contentArea = document.querySelector(".content-area");
 
+    // --- 2. Mobile Sidebar Helper Functions ---
+    function openMobileSidebar() {
+        if (sidebar) sidebar.classList.add("mobile-open");
+        if (sidebarOverlay) sidebarOverlay.classList.add("active");
+        if (mobileMenuBtn) mobileMenuBtn.classList.add("hidden");
+    }
+
+    function closeMobileSidebar() {
+        if (sidebar) sidebar.classList.remove("mobile-open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+        if (mobileMenuBtn) mobileMenuBtn.classList.remove("hidden");
+    }
+
+    // --- 3. Tab Switching Logic ---
     navItems.forEach(item => {
         item.addEventListener("click", () => {
             navItems.forEach(nav => nav.classList.remove("active"));
@@ -11,80 +33,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
             item.classList.add("active");
             const targetId = item.getAttribute("data-tab");
-            document.getElementById(targetId).classList.add("active");
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) targetContent.classList.add("active");
 
             // Close mobile sidebar after navigation
             if (window.innerWidth <= 768) {
-                sidebar.classList.remove("mobile-open");
-                sidebarOverlay.classList.remove("active");
+                closeMobileSidebar();
             }
         });
     });
 
-    // --- 2. Theme Toggle ---
+    // --- 4. Theme Toggle ---
     const themeBtn = document.getElementById("theme-toggle");
     const body = document.body;
-    const themeIcon = themeBtn.querySelector("i");
-    const themeText = themeBtn.querySelector("span");
+    const themeIcon = themeBtn ? themeBtn.querySelector("i") : null;
+    const themeText = themeBtn ? themeBtn.querySelector("span") : null;
 
-    themeBtn.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
-        if (body.classList.contains("dark-mode")) {
-            themeIcon.className = "fa-solid fa-moon";
-            themeText.textContent = "Dark Mode";
-        } else {
-            themeIcon.className = "fa-solid fa-sun";
-            themeText.textContent = "Light Mode";
+    if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            if (body.classList.contains("dark-mode")) {
+                if (themeIcon) themeIcon.className = "fa-solid fa-moon";
+                if (themeText) themeText.textContent = "Dark Mode";
+            } else {
+                if (themeIcon) themeIcon.className = "fa-solid fa-sun";
+                if (themeText) themeText.textContent = "Light Mode";
+            }
+        });
+    }
+
+    // --- 5. Sidebar Auto-Hide (Desktop) ---
+    if (autohideToggle && sidebar && appContainer) {
+        autohideToggle.addEventListener("change", (e) => {
+            if (e.target.checked) {
+                sidebar.classList.add("autohide");
+            } else {
+                sidebar.classList.remove("autohide");
+                appContainer.classList.remove("hovered");
+            }
+        });
+
+        if (hoverZone) {
+            hoverZone.addEventListener("mouseenter", () => {
+                if (sidebar.classList.contains("autohide")) {
+                    appContainer.classList.add("hovered");
+                }
+            });
         }
-    });
 
-    // --- 3. Sidebar Auto-Hide (now in sidebar bottom, no settings popup) ---
-    const autohideToggle = document.getElementById("autohide-toggle");
-    const sidebar = document.getElementById("sidebar");
-    const hoverZone = document.querySelector(".hover-trigger-zone");
-    const appContainer = document.querySelector(".app-container");
+        sidebar.addEventListener("mouseleave", () => {
+            appContainer.classList.remove("hovered");
+        });
 
-    autohideToggle.addEventListener("change", (e) => {
-        if (e.target.checked) {
-            sidebar.classList.add("autohide");
-        } else {
-            sidebar.classList.remove("autohide");
+        if (contentArea) {
+            contentArea.addEventListener("mouseenter", () => {
+                if (sidebar.classList.contains("autohide")) {
+                    appContainer.classList.remove("hovered");
+                }
+            });
         }
-    });
+    }
 
-    hoverZone.addEventListener("mouseenter", () => {
-        if (sidebar.classList.contains("autohide")) {
-            appContainer.classList.add("hovered");
-        }
-    });
+    // --- 6. Mobile Sidebar Controls ---
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", openMobileSidebar);
+    }
 
-    sidebar.addEventListener("mouseleave", () => {
-        appContainer.classList.remove("hovered");
-    });
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener("click", closeMobileSidebar);
+    }
 
-    // --- 4. Mobile Sidebar Toggle ---
-    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeMobileSidebar);
+    }
 
-    mobileMenuBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("mobile-open");
-        sidebarOverlay.classList.toggle("active");
-    });
-
-    sidebarOverlay.addEventListener("click", () => {
-        sidebar.classList.remove("mobile-open");
-        sidebarOverlay.classList.remove("active");
-    });
-
-    // Handle resize: clean up mobile state if resizing to desktop
     window.addEventListener("resize", () => {
         if (window.innerWidth > 768) {
-            sidebar.classList.remove("mobile-open");
-            sidebarOverlay.classList.remove("active");
+            closeMobileSidebar();
         }
     });
 
-    // --- 5. Advanced Multi-Typewriter Logic ---
+    // --- 7. Advanced Multi-Typewriter Logic ---
     class Typewriter {
         constructor(elementId, phrases) {
             this.element = document.getElementById(elementId);
@@ -92,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.phraseIndex = 0;
             this.charIndex = 0;
             this.isDeleting = false;
-            if(this.element) this.type();
+            if (this.element) this.type();
         }
 
         type() {
@@ -146,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "visionary."
     ]);
 
-    // --- 6. NASA Kepler Facts ---
+    // --- 8. NASA Kepler Facts ---
     const facts = [
         "Fun Fact: NASA's Kepler mission proved our sky is filled with more planets than stars.",
         "Fun Fact: Kepler discovered over 2,600 confirmed exoplanets using transit photometry.",
@@ -155,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const factElement = document.getElementById("kepler-fact");
-    if(factElement) {
+    if (factElement) {
         const randomFact = facts[Math.floor(Math.random() * facts.length)];
         factElement.style.opacity = 0;
         setTimeout(() => {
