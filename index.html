@@ -154,13 +154,100 @@
                     <h1>AI Skill-to-Gig Mapper</h1>
                     <p class="subtitle">Directly mapping human potential to economic self-sufficiency.</p>
                 </header>
-                <div class="card">
+
+                <div class="card mapper-search-card">
                     <h2>Opportunity Generator Sandbox</h2>
-                    <p>Enter a capability or interest below to watch KEPLER construct your 3-step localized pathway.</p>
-                    <div class="sandbox-input-group">
-                        <input type="text" placeholder="e.g. Basic Data Entry, Python Scripts..." class="dark-input">
-                        <button class="un-button action-btn">Generate Pathway</button>
+                    <p>Enter a capability, interest, or tool below to watch KEPLER construct your 3-step localized pathway with NotebookLM-style visual flashcards.</p>
+                    
+                    <form id="mapper-form" class="sandbox-input-group">
+                        <input type="text" id="mapper-input" placeholder="e.g. Basic Data Entry, Python Scripts, Local SEO, Graphic Design..." class="dark-input" autocomplete="off" required>
+                        <button type="submit" id="mapper-submit-btn" class="un-button action-btn">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Generate Pathway</span>
+                        </button>
+                    </form>
+
+                    <!-- Skill Suggestion Chips -->
+                    <div class="mapper-chips">
+                        <span class="chips-label">Try asking:</span>
+                        <button type="button" class="chip-btn" data-query="Python Automation Scripts">Python Automation</button>
+                        <button type="button" class="chip-btn" data-query="Data Entry & Spreadsheets">Data Entry to Excel</button>
+                        <button type="button" class="chip-btn" data-query="UI/UX for Accessibility">UI/UX Accessibility</button>
+                        <button type="button" class="chip-btn" data-query="Digital Storytelling & Media">Digital Storytelling</button>
+                        <button type="button" class="chip-btn" data-query="Local Business SEO & Maps">Local Business SEO</button>
                     </div>
+
+                    <!-- Optional Gemini API Key Drawer -->
+                    <div class="api-key-section">
+                        <button type="button" id="api-key-toggle-btn" class="key-toggle-link">
+                            <i class="fa-solid fa-key"></i> <span id="key-toggle-label">Gemini API Key (Optional)</span>
+                        </button>
+                        <div id="api-key-drawer" class="api-key-drawer hidden">
+                            <p class="api-key-hint">Enter your Google AI Studio Gemini API key to run live Gemini 2.0 Flash models. Left blank? KEPLER uses its built-in knowledge engine seamlessly.</p>
+                            <div class="key-input-row">
+                                <input type="password" id="gemini-key-input" placeholder="AIzaSy... (saved locally in your browser)" class="dark-input">
+                                <button type="button" id="save-key-btn" class="un-button">Save Key</button>
+                                <button type="button" id="clear-key-btn" class="un-button subtle-action">Clear</button>
+                            </div>
+                            <span id="key-status-msg" class="key-status-msg"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="mapper-loading" class="mapper-loading hidden">
+                    <div class="loading-spinner">
+                        <i class="fa-solid fa-satellite fa-spin"></i>
+                    </div>
+                    <h3 id="loading-status-text">Analyzing skill and local gig opportunities...</h3>
+                    <p class="loading-subtext">Generating visual flashcards, roadmap flowchart, and SDG alignments</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="mapper-error" class="card error-card hidden">
+                    <div class="issue-header">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #ff453a;"></i>
+                        <h3 id="error-title">Generation Notice</h3>
+                    </div>
+                    <p id="error-message"></p>
+                    <button type="button" id="retry-btn" class="un-button">Try Again</button>
+                </div>
+
+                <!-- Mapper Results Area -->
+                <div id="mapper-results" class="mapper-results hidden">
+                    <!-- Results Header Banner -->
+                    <div class="card results-hero-card">
+                        <div class="hero-top-meta">
+                            <span class="engine-badge" id="engine-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Generated</span>
+                            <div class="sdg-pill-group" id="sdg-pill-group"></div>
+                        </div>
+                        <h2 id="result-topic-title" class="result-title"></h2>
+                        <p id="result-tagline" class="result-tagline"></p>
+                        <p id="result-summary" class="result-summary"></p>
+                    </div>
+
+                    <!-- 1. Visual Concept Cards (NotebookLM Style) -->
+                    <h3 class="results-section-heading">
+                        <i class="fa-solid fa-lightbulb"></i> Core Capabilities & Market Fit
+                    </h3>
+                    <div class="insights-grid" id="insights-grid"></div>
+
+                    <!-- 2. 3-Step Localized Roadmap Flowchart -->
+                    <h3 class="results-section-heading">
+                        <i class="fa-solid fa-diagram-project"></i> 3-Step Localized Pathway Flowchart
+                    </h3>
+                    <div class="flowchart-container" id="flowchart-container"></div>
+
+                    <!-- 3. Interactive Study Flashcards (NotebookLM Style) -->
+                    <div class="flashcards-section-header">
+                        <h3 class="results-section-heading">
+                            <i class="fa-solid fa-clone"></i> Interactive Study Flashcards
+                        </h3>
+                        <div class="flashcard-controls">
+                            <span class="flip-hint"><i class="fa-solid fa-hand-pointer"></i> Click card to flip</span>
+                            <button type="button" id="flip-all-btn" class="un-button text-btn">Flip All</button>
+                        </div>
+                    </div>
+                    <div class="flashcards-grid" id="flashcards-grid"></div>
                 </div>
             </section>
 
